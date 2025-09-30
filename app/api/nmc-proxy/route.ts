@@ -29,12 +29,16 @@ export async function POST(req: NextRequest) {
       },
     });
   } catch (err: any) {
-    return new Response(
-      JSON.stringify({ error: "Proxy failed", details: err.message }),
-      {
-        status: 500,
-        headers: { "Content-Type": "application/json" },
-      }
-    );
-  }
+  return new Response(
+    JSON.stringify({ 
+      error: "Proxy failed", 
+      details: err?.message || err.toString(),
+      stack: err?.stack 
+    }),
+    {
+      status: 500,
+      headers: { "Content-Type": "application/json" }
+    }
+  );
+}
 }
